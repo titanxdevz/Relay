@@ -38,6 +38,28 @@ export interface ModelCardProps {
   perf?: ModelPerfBadgeData
 }
 
+const PRICE_LABEL_CLASS = cn(
+  'text-muted-foreground text-[10px] leading-none font-medium tracking-wider uppercase'
+)
+
+/**
+ * The price value is rendered as a direct text child so the unit suffix stays
+ * inside the same element without changing the value's accessible name.
+ */
+function PriceValue(props: { value: string; unit?: string }) {
+  return (
+    <span className='flex min-w-0 flex-wrap items-baseline gap-x-1 font-mono text-[15px] leading-tight font-semibold tabular-nums'>
+      {props.value}
+      {props.unit && (
+        <span className='text-muted-foreground text-[11px] font-normal whitespace-nowrap'>
+          {' '}
+          / {props.unit}
+        </span>
+      )}
+    </span>
+  )
+}
+
 export const ModelCard = memo(function ModelCard(props: ModelCardProps) {
   const { t, i18n } = useTranslation()
   const tokenUnit = props.tokenUnit ?? DEFAULT_TOKEN_UNIT
